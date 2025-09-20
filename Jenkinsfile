@@ -18,17 +18,15 @@ node {
     stage('Deploy to EC2'){
     echo 'Deploying to EC2'
     sh """
-        sudo mkdir -p ${appDir}
-        sudo chown -R jenkins:jenkins ${appDir}
+        sudo mkdir -p /var/www/nextjs-app
+        sudo chown -R jenkins:jenkins /var/www/nextjs-app
 
-        rsync -av --delete --exclude='.git' --exclude='node_modules' ./ ${appDir}
+        rsync -av --delete --exclude='.git' --exclude='node_modules' --exclude='.next' ./ /var/www/nextjs-app
 
-        cd ${appDir}
-        npm config set fetch-retry-maxtimeout 60000
+        cd /var/www/nextjs-app
         npm install --legacy-peer-deps
         npm run build
-        sudo fuser -k 3000/tcp || true
-        npm run start
     """
   }
+
 }
