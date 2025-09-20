@@ -12,6 +12,7 @@ node {
             branch: 'main',
             url: 'https://github.com/sabaramzan123/CICD-with-Jenkins'
         )
+        
     }
 
     stage('Deploy to EC2'){
